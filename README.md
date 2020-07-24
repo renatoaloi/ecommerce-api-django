@@ -5,8 +5,8 @@
 Clone this Git repository and navigate to the cloned folder
 
 ```
-$ git clone ...
-$ cd folder_name
+$ git clone https://github.com/renatoaloi/ecommerce-api-django.git
+$ cd ecommerce-api-django
 ```
 
 ## Setting up the environment
