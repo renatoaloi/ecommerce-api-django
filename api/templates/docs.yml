@@ -1,0 +1,1371 @@
+openapi: 3.0.2
+info:
+  title: ''
+  version: ''
+paths:
+  /api/health-check:
+    get:
+      operationId: listhealth_checks
+      description: Health check GET method returns always HTTP status = 200 (OK)
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+  /api/customers/:
+    get:
+      operationId: listCustomers
+      description: CRUD endpoint for Customer management
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    name:
+                      type: string
+                      maxLength: 255
+                    email:
+                      type: string
+                      maxLength: 255
+                    phone:
+                      type: string
+                      maxLength: 255
+                    creation_date:
+                      type: string
+                      format: date-time
+                      readOnly: true
+                  required:
+                  - name
+                  - email
+                  - phone
+          description: ''
+    post:
+      operationId: createCustomer
+      description: CRUD endpoint for Customer management
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id001
+              properties:
+                name:
+                  type: string
+                  maxLength: 255
+                email:
+                  type: string
+                  maxLength: 255
+                phone:
+                  type: string
+                  maxLength: 255
+              required:
+              - name
+              - email
+              - phone
+          application/x-www-form-urlencoded:
+            schema: *id001
+          multipart/form-data:
+            schema: *id001
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 255
+                  email:
+                    type: string
+                    maxLength: 255
+                  phone:
+                    type: string
+                    maxLength: 255
+                  creation_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - name
+                - email
+                - phone
+          description: ''
+  /api/customers/{id}/:
+    get:
+      operationId: retrieveCustomer
+      description: CRUD endpoint for Customer management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this customer.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 255
+                  email:
+                    type: string
+                    maxLength: 255
+                  phone:
+                    type: string
+                    maxLength: 255
+                  creation_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - name
+                - email
+                - phone
+          description: ''
+    put:
+      operationId: updateCustomer
+      description: CRUD endpoint for Customer management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this customer.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id002
+              properties:
+                name:
+                  type: string
+                  maxLength: 255
+                email:
+                  type: string
+                  maxLength: 255
+                phone:
+                  type: string
+                  maxLength: 255
+              required:
+              - name
+              - email
+              - phone
+          application/x-www-form-urlencoded:
+            schema: *id002
+          multipart/form-data:
+            schema: *id002
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 255
+                  email:
+                    type: string
+                    maxLength: 255
+                  phone:
+                    type: string
+                    maxLength: 255
+                  creation_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - name
+                - email
+                - phone
+          description: ''
+    patch:
+      operationId: partial_updateCustomer
+      description: CRUD endpoint for Customer management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this customer.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id003
+              properties:
+                name:
+                  type: string
+                  maxLength: 255
+                email:
+                  type: string
+                  maxLength: 255
+                phone:
+                  type: string
+                  maxLength: 255
+          application/x-www-form-urlencoded:
+            schema: *id003
+          multipart/form-data:
+            schema: *id003
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 255
+                  email:
+                    type: string
+                    maxLength: 255
+                  phone:
+                    type: string
+                    maxLength: 255
+                  creation_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - name
+                - email
+                - phone
+          description: ''
+    delete:
+      operationId: destroyCustomer
+      description: CRUD endpoint for Customer management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this customer.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/products/:
+    get:
+      operationId: listProducts
+      description: CRUD endpoint for Product management
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    name:
+                      type: string
+                      maxLength: 255
+                    description:
+                      type: string
+                    image_link:
+                      type: string
+                    price:
+                      type: number
+                    creation_date:
+                      type: string
+                      format: date-time
+                      readOnly: true
+                  required:
+                  - name
+                  - description
+                  - image_link
+                  - price
+          description: ''
+    post:
+      operationId: createProduct
+      description: CRUD endpoint for Product management
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id004
+              properties:
+                name:
+                  type: string
+                  maxLength: 255
+                description:
+                  type: string
+                image_link:
+                  type: string
+                price:
+                  type: number
+              required:
+              - name
+              - description
+              - image_link
+              - price
+          application/x-www-form-urlencoded:
+            schema: *id004
+          multipart/form-data:
+            schema: *id004
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 255
+                  description:
+                    type: string
+                  image_link:
+                    type: string
+                  price:
+                    type: number
+                  creation_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - name
+                - description
+                - image_link
+                - price
+          description: ''
+  /api/products/{id}/:
+    get:
+      operationId: retrieveProduct
+      description: CRUD endpoint for Product management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this product.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 255
+                  description:
+                    type: string
+                  image_link:
+                    type: string
+                  price:
+                    type: number
+                  creation_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - name
+                - description
+                - image_link
+                - price
+          description: ''
+    put:
+      operationId: updateProduct
+      description: CRUD endpoint for Product management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this product.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id005
+              properties:
+                name:
+                  type: string
+                  maxLength: 255
+                description:
+                  type: string
+                image_link:
+                  type: string
+                price:
+                  type: number
+              required:
+              - name
+              - description
+              - image_link
+              - price
+          application/x-www-form-urlencoded:
+            schema: *id005
+          multipart/form-data:
+            schema: *id005
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 255
+                  description:
+                    type: string
+                  image_link:
+                    type: string
+                  price:
+                    type: number
+                  creation_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - name
+                - description
+                - image_link
+                - price
+          description: ''
+    patch:
+      operationId: partial_updateProduct
+      description: CRUD endpoint for Product management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this product.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id006
+              properties:
+                name:
+                  type: string
+                  maxLength: 255
+                description:
+                  type: string
+                image_link:
+                  type: string
+                price:
+                  type: number
+          application/x-www-form-urlencoded:
+            schema: *id006
+          multipart/form-data:
+            schema: *id006
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  name:
+                    type: string
+                    maxLength: 255
+                  description:
+                    type: string
+                  image_link:
+                    type: string
+                  price:
+                    type: number
+                  creation_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - name
+                - description
+                - image_link
+                - price
+          description: ''
+    delete:
+      operationId: destroyProduct
+      description: CRUD endpoint for Product management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this product.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/invoices/:
+    get:
+      operationId: listInvoices
+      description: CRUD endpoint for Invoice management
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    customer:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 255
+                        email:
+                          type: string
+                          maxLength: 255
+                        phone:
+                          type: string
+                          maxLength: 255
+                        creation_date:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                      required:
+                      - name
+                      - email
+                      - phone
+                      type: object
+                      readOnly: true
+                    purchase_date:
+                      type: string
+                      format: date-time
+                      readOnly: true
+                  required: []
+          description: ''
+    post:
+      operationId: createInvoice
+      description: CRUD endpoint for Invoice management
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id007
+              properties:
+                customer_id:
+                  type: integer
+                  writeOnly: true
+              required:
+              - customer_id
+          application/x-www-form-urlencoded:
+            schema: *id007
+          multipart/form-data:
+            schema: *id007
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  customer:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 255
+                      email:
+                        type: string
+                        maxLength: 255
+                      phone:
+                        type: string
+                        maxLength: 255
+                      creation_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - name
+                    - email
+                    - phone
+                    type: object
+                    readOnly: true
+                  purchase_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required: []
+          description: ''
+  /api/invoices/{id}/:
+    get:
+      operationId: retrieveInvoice
+      description: CRUD endpoint for Invoice management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this invoice.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  customer:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 255
+                      email:
+                        type: string
+                        maxLength: 255
+                      phone:
+                        type: string
+                        maxLength: 255
+                      creation_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - name
+                    - email
+                    - phone
+                    type: object
+                    readOnly: true
+                  purchase_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required: []
+          description: ''
+    put:
+      operationId: updateInvoice
+      description: CRUD endpoint for Invoice management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this invoice.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id008
+              properties:
+                customer_id:
+                  type: integer
+                  writeOnly: true
+              required:
+              - customer_id
+          application/x-www-form-urlencoded:
+            schema: *id008
+          multipart/form-data:
+            schema: *id008
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  customer:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 255
+                      email:
+                        type: string
+                        maxLength: 255
+                      phone:
+                        type: string
+                        maxLength: 255
+                      creation_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - name
+                    - email
+                    - phone
+                    type: object
+                    readOnly: true
+                  purchase_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required: []
+          description: ''
+    patch:
+      operationId: partial_updateInvoice
+      description: CRUD endpoint for Invoice management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this invoice.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id009
+              properties:
+                customer_id:
+                  type: integer
+                  writeOnly: true
+          application/x-www-form-urlencoded:
+            schema: *id009
+          multipart/form-data:
+            schema: *id009
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  customer:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 255
+                      email:
+                        type: string
+                        maxLength: 255
+                      phone:
+                        type: string
+                        maxLength: 255
+                      creation_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - name
+                    - email
+                    - phone
+                    type: object
+                    readOnly: true
+                  purchase_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required: []
+          description: ''
+    delete:
+      operationId: destroyInvoice
+      description: CRUD endpoint for Invoice management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this invoice.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/invoiceitems/:
+    get:
+      operationId: listInvoiceItems
+      description: CRUD endpoint for Invoice's Item management
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    invoice:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        customer:
+                          properties:
+                            id:
+                              type: integer
+                              readOnly: true
+                            name:
+                              type: string
+                              maxLength: 255
+                            email:
+                              type: string
+                              maxLength: 255
+                            phone:
+                              type: string
+                              maxLength: 255
+                            creation_date:
+                              type: string
+                              format: date-time
+                              readOnly: true
+                          required:
+                          - name
+                          - email
+                          - phone
+                          type: object
+                          readOnly: true
+                        customer_id:
+                          type: integer
+                          writeOnly: true
+                        purchase_date:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                      required:
+                      - customer_id
+                      type: object
+                      readOnly: true
+                    product:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 255
+                        description:
+                          type: string
+                        image_link:
+                          type: string
+                        price:
+                          type: number
+                        creation_date:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                      required:
+                      - name
+                      - description
+                      - image_link
+                      - price
+                      type: object
+                      readOnly: true
+                    quantity:
+                      type: integer
+                    amount_paid:
+                      type: number
+                    creation_date:
+                      type: string
+                      format: date-time
+                      readOnly: true
+                  required:
+                  - quantity
+                  - amount_paid
+          description: ''
+    post:
+      operationId: createInvoiceItem
+      description: CRUD endpoint for Invoice's Item management
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id010
+              properties:
+                invoice_id:
+                  type: integer
+                  writeOnly: true
+                product_id:
+                  type: integer
+                  writeOnly: true
+                quantity:
+                  type: integer
+                amount_paid:
+                  type: number
+              required:
+              - invoice_id
+              - product_id
+              - quantity
+              - amount_paid
+          application/x-www-form-urlencoded:
+            schema: *id010
+          multipart/form-data:
+            schema: *id010
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  invoice:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      customer:
+                        properties:
+                          id:
+                            type: integer
+                            readOnly: true
+                          name:
+                            type: string
+                            maxLength: 255
+                          email:
+                            type: string
+                            maxLength: 255
+                          phone:
+                            type: string
+                            maxLength: 255
+                          creation_date:
+                            type: string
+                            format: date-time
+                            readOnly: true
+                        required:
+                        - name
+                        - email
+                        - phone
+                        type: object
+                        readOnly: true
+                      customer_id:
+                        type: integer
+                        writeOnly: true
+                      purchase_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - customer_id
+                    type: object
+                    readOnly: true
+                  product:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 255
+                      description:
+                        type: string
+                      image_link:
+                        type: string
+                      price:
+                        type: number
+                      creation_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - name
+                    - description
+                    - image_link
+                    - price
+                    type: object
+                    readOnly: true
+                  quantity:
+                    type: integer
+                  amount_paid:
+                    type: number
+                  creation_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - quantity
+                - amount_paid
+          description: ''
+  /api/invoiceitems/{id}/:
+    get:
+      operationId: retrieveInvoiceItem
+      description: CRUD endpoint for Invoice's Item management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this invoice item.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  invoice:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      customer:
+                        properties:
+                          id:
+                            type: integer
+                            readOnly: true
+                          name:
+                            type: string
+                            maxLength: 255
+                          email:
+                            type: string
+                            maxLength: 255
+                          phone:
+                            type: string
+                            maxLength: 255
+                          creation_date:
+                            type: string
+                            format: date-time
+                            readOnly: true
+                        required:
+                        - name
+                        - email
+                        - phone
+                        type: object
+                        readOnly: true
+                      customer_id:
+                        type: integer
+                        writeOnly: true
+                      purchase_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - customer_id
+                    type: object
+                    readOnly: true
+                  product:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 255
+                      description:
+                        type: string
+                      image_link:
+                        type: string
+                      price:
+                        type: number
+                      creation_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - name
+                    - description
+                    - image_link
+                    - price
+                    type: object
+                    readOnly: true
+                  quantity:
+                    type: integer
+                  amount_paid:
+                    type: number
+                  creation_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - quantity
+                - amount_paid
+          description: ''
+    put:
+      operationId: updateInvoiceItem
+      description: CRUD endpoint for Invoice's Item management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this invoice item.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id011
+              properties:
+                invoice_id:
+                  type: integer
+                  writeOnly: true
+                product_id:
+                  type: integer
+                  writeOnly: true
+                quantity:
+                  type: integer
+                amount_paid:
+                  type: number
+              required:
+              - invoice_id
+              - product_id
+              - quantity
+              - amount_paid
+          application/x-www-form-urlencoded:
+            schema: *id011
+          multipart/form-data:
+            schema: *id011
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  invoice:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      customer:
+                        properties:
+                          id:
+                            type: integer
+                            readOnly: true
+                          name:
+                            type: string
+                            maxLength: 255
+                          email:
+                            type: string
+                            maxLength: 255
+                          phone:
+                            type: string
+                            maxLength: 255
+                          creation_date:
+                            type: string
+                            format: date-time
+                            readOnly: true
+                        required:
+                        - name
+                        - email
+                        - phone
+                        type: object
+                        readOnly: true
+                      customer_id:
+                        type: integer
+                        writeOnly: true
+                      purchase_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - customer_id
+                    type: object
+                    readOnly: true
+                  product:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 255
+                      description:
+                        type: string
+                      image_link:
+                        type: string
+                      price:
+                        type: number
+                      creation_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - name
+                    - description
+                    - image_link
+                    - price
+                    type: object
+                    readOnly: true
+                  quantity:
+                    type: integer
+                  amount_paid:
+                    type: number
+                  creation_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - quantity
+                - amount_paid
+          description: ''
+    patch:
+      operationId: partial_updateInvoiceItem
+      description: CRUD endpoint for Invoice's Item management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this invoice item.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id012
+              properties:
+                invoice_id:
+                  type: integer
+                  writeOnly: true
+                product_id:
+                  type: integer
+                  writeOnly: true
+                quantity:
+                  type: integer
+                amount_paid:
+                  type: number
+          application/x-www-form-urlencoded:
+            schema: *id012
+          multipart/form-data:
+            schema: *id012
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  invoice:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      customer:
+                        properties:
+                          id:
+                            type: integer
+                            readOnly: true
+                          name:
+                            type: string
+                            maxLength: 255
+                          email:
+                            type: string
+                            maxLength: 255
+                          phone:
+                            type: string
+                            maxLength: 255
+                          creation_date:
+                            type: string
+                            format: date-time
+                            readOnly: true
+                        required:
+                        - name
+                        - email
+                        - phone
+                        type: object
+                        readOnly: true
+                      customer_id:
+                        type: integer
+                        writeOnly: true
+                      purchase_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - customer_id
+                    type: object
+                    readOnly: true
+                  product:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 255
+                      description:
+                        type: string
+                      image_link:
+                        type: string
+                      price:
+                        type: number
+                      creation_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - name
+                    - description
+                    - image_link
+                    - price
+                    type: object
+                    readOnly: true
+                  quantity:
+                    type: integer
+                  amount_paid:
+                    type: number
+                  creation_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                required:
+                - quantity
+                - amount_paid
+          description: ''
+    delete:
+      operationId: destroyInvoiceItem
+      description: CRUD endpoint for Invoice's Item management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this invoice item.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
