@@ -1,3 +1,4 @@
+import datetime
 from django.test import TestCase, Client
 from django.urls import reverse
 from rest_framework import status
@@ -23,6 +24,15 @@ class TestEcommerceApi(TestCase):
             "description": "Protects the enamel", 
             "image_link": "https://en.wikipedia.org/wiki/Toothpaste#/media/File:Toothbrush,_Toothpaste,_Dental_Care_(571741)_(cropped).jpg", 
             "price": .99
+        }
+        self.invoice_data = {
+            "customer_id": 0
+        }
+        self.invoice_item_data = {
+            "invoice_id": 0,
+            "product_id": 0,
+            "quantity": 10,
+            "amount_paid": 9.99
         }
 
 
@@ -51,11 +61,16 @@ class TestEcommerceApi(TestCase):
             r_json = response.json()
             # check for the fields
             expected = {}
+            original = {}
             for f in fields:
+                original[f] = data[f]
                 expected[f] = r_json[f]
             # trying a more pythonic way
             #fs = [{[f]: r_json[f]} for f in fields] #failed
-            self.assertJSONEqual(json.dumps(expected), json.dumps(data))
+            self.assertJSONEqual(
+                json.dumps(expected, indent=4, sort_keys=True, default=str), 
+                json.dumps(original, indent=4, sort_keys=True, default=str)
+            )
             return r_json["id"]
         self.assertEqual(201, response.status_code)
         return None
@@ -194,4 +209,43 @@ class TestEcommerceApi(TestCase):
         if id:
             # then performe delete
             self._delete_model("product", id)
+        self.assertIsNotNone(id)
+
+
+    def test_invoice_create(self):
+        """
+        This test case checks if invoice create endpoint is working as expected
+        """
+        # first we create a customer
+        id = self._create_model("customer", self.customer_data, ["name", "email", "phone"])
+        if id:
+            # then we can create the invoice
+            data = self.invoice_data
+            data["customer_id"] = id
+            self._create_model("invoice", data, [])
+        self.assertIsNotNone(id)
+
+    
+    def test_invoice_item_create(self):
+        """
+        This test case checks if invoice's item create endpoint is working as expected
+        """
+        # first we create a customer
+        id = self._create_model("customer", self.customer_data, ["name", "email", "phone"])
+        if id:
+            # then we create a invoice
+            data = self.invoice_data
+            data["customer_id"] = id
+            id_inv = self._create_model("invoice", data, [])
+            if id_inv:
+                # then we create a product
+                id_prod = self._create_model("product", self.product_data, ["name", "description", "image_link", "price"])
+                if id_prod:
+                    # then we can create the invoice's item
+                    data = self.invoice_item_data
+                    data["invoice_id"] = id_inv
+                    data["product_id"] = id_prod
+                    self._create_model("invoiceitem", data, ["quantity", "amount_paid"])
+                self.assertIsNotNone(id_prod)
+            self.assertIsNotNone(id_inv)
         self.assertIsNotNone(id)
