@@ -1,10 +1,11 @@
 openapi: 3.0.2
 info:
-  title: ''
-  version: ''
+  title: 'E-commerce API'
+  version: '1.0.0'
 paths:
   /api/health-check:
     get:
+      tags: [ "Health Check" ]
       operationId: listhealth_checks
       description: Health check GET method returns always HTTP status = 200 (OK)
       parameters: []
@@ -18,6 +19,7 @@ paths:
           description: ''
   /api/customers/:
     get:
+      tags: [ "Customers" ]
       operationId: listCustomers
       description: CRUD endpoint for Customer management
       parameters: []
@@ -51,6 +53,7 @@ paths:
                   - phone
           description: ''
     post:
+      tags: [ "Customers" ]
       operationId: createCustomer
       description: CRUD endpoint for Customer management
       parameters: []
@@ -105,6 +108,7 @@ paths:
           description: ''
   /api/customers/{id}/:
     get:
+      tags: [ "Customers" ]
       operationId: retrieveCustomer
       description: CRUD endpoint for Customer management
       parameters:
@@ -142,6 +146,7 @@ paths:
                 - phone
           description: ''
     put:
+      tags: [ "Customers" ]
       operationId: updateCustomer
       description: CRUD endpoint for Customer management
       parameters:
@@ -201,6 +206,7 @@ paths:
                 - phone
           description: ''
     patch:
+      tags: [ "Customers" ]
       operationId: partial_updateCustomer
       description: CRUD endpoint for Customer management
       parameters:
@@ -256,6 +262,7 @@ paths:
                 - phone
           description: ''
     delete:
+      tags: [ "Customers" ]
       operationId: destroyCustomer
       description: CRUD endpoint for Customer management
       parameters:
@@ -270,6 +277,7 @@ paths:
           description: ''
   /api/products/:
     get:
+      tags: [ "Products" ]
       operationId: listProducts
       description: CRUD endpoint for Product management
       parameters: []
@@ -304,6 +312,7 @@ paths:
                   - price
           description: ''
     post:
+      tags: [ "Products" ]
       operationId: createProduct
       description: CRUD endpoint for Product management
       parameters: []
@@ -360,6 +369,7 @@ paths:
           description: ''
   /api/products/{id}/:
     get:
+      tags: [ "Products" ]
       operationId: retrieveProduct
       description: CRUD endpoint for Product management
       parameters:
@@ -398,6 +408,7 @@ paths:
                 - price
           description: ''
     put:
+      tags: [ "Products" ]
       operationId: updateProduct
       description: CRUD endpoint for Product management
       parameters:
@@ -459,6 +470,7 @@ paths:
                 - price
           description: ''
     patch:
+      tags: [ "Products" ]
       operationId: partial_updateProduct
       description: CRUD endpoint for Product management
       parameters:
@@ -515,6 +527,7 @@ paths:
                 - price
           description: ''
     delete:
+      tags: [ "Products" ]
       operationId: destroyProduct
       description: CRUD endpoint for Product management
       parameters:
@@ -529,6 +542,7 @@ paths:
           description: ''
   /api/invoices/:
     get:
+      tags: [ "Invoices" ]
       operationId: listInvoices
       description: CRUD endpoint for Invoice management
       parameters: []
@@ -574,6 +588,7 @@ paths:
                   required: []
           description: ''
     post:
+      tags: [ "Invoices" ]
       operationId: createInvoice
       description: CRUD endpoint for Invoice management
       parameters: []
@@ -632,6 +647,7 @@ paths:
           description: ''
   /api/invoices/{id}/:
     get:
+      tags: [ "Invoices" ]
       operationId: retrieveInvoice
       description: CRUD endpoint for Invoice management
       parameters:
@@ -681,6 +697,7 @@ paths:
                 required: []
           description: ''
     put:
+      tags: [ "Invoices" ]
       operationId: updateInvoice
       description: CRUD endpoint for Invoice management
       parameters:
@@ -744,6 +761,7 @@ paths:
                 required: []
           description: ''
     patch:
+      tags: [ "Invoices" ]
       operationId: partial_updateInvoice
       description: CRUD endpoint for Invoice management
       parameters:
@@ -805,6 +823,7 @@ paths:
                 required: []
           description: ''
     delete:
+      tags: [ "Invoices" ]
       operationId: destroyInvoice
       description: CRUD endpoint for Invoice management
       parameters:
@@ -819,6 +838,7 @@ paths:
           description: ''
   /api/invoiceitems/:
     get:
+      tags: [ "Invoice's Items" ]
       operationId: listInvoiceItems
       description: CRUD endpoint for Invoice's Item management
       parameters: []
@@ -911,6 +931,7 @@ paths:
                   - amount_paid
           description: ''
     post:
+      tags: [ "Invoice's Items" ]
       operationId: createInvoiceItem
       description: CRUD endpoint for Invoice's Item management
       parameters: []
@@ -1026,6 +1047,7 @@ paths:
           description: ''
   /api/invoiceitems/{id}/:
     get:
+      tags: [ "Invoice's Items" ]
       operationId: retrieveInvoiceItem
       description: CRUD endpoint for Invoice's Item management
       parameters:
@@ -1122,6 +1144,7 @@ paths:
                 - amount_paid
           description: ''
     put:
+      tags: [ "Invoice's Items" ]
       operationId: updateInvoiceItem
       description: CRUD endpoint for Invoice's Item management
       parameters:
@@ -1242,6 +1265,7 @@ paths:
                 - amount_paid
           description: ''
     patch:
+      tags: [ "Invoice's Items" ]
       operationId: partial_updateInvoiceItem
       description: CRUD endpoint for Invoice's Item management
       parameters:
@@ -1357,6 +1381,7 @@ paths:
                 - amount_paid
           description: ''
     delete:
+      tags: [ "Invoice's Items" ]
       operationId: destroyInvoiceItem
       description: CRUD endpoint for Invoice's Item management
       parameters:
