@@ -145,7 +145,7 @@ $ sudo pip3 install awscli
 $ aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
 $ aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
 $ eval $( aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION )
-$ bash ./infra/ci.sh $ENV $AWS_ACCOUNT_ID $AWS_DEFAULT_REGION
+$ bash ./infra/ci.sh "$ENV" "$AWS_ACCOUNT_ID" "$AWS_DEFAULT_REGION"
 ```
 
 Where ```hml``` is the stage parameter
