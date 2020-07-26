@@ -43,4 +43,4 @@ jobs:
         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
         eval $( aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION )
 
-        bash ./infra/ci.sh $ENV $AWS_ACCOUNT_ID
+        bash ./infra/ci.sh $ENV $AWS_ACCOUNT_ID $AWS_DEFAULT_REGION

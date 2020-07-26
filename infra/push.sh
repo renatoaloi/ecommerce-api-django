@@ -44,7 +44,7 @@ puts "Carregando Configuracoes"
 CONFIG=
 load_config
 
-REGION="${AWS_DEFAULT_REGION}"
+REGION="$3"
 REPOSITORY=`echo "$CONFIG" | jq -r .projectName`
 
 if [[ -z "$REGION" ]]; then

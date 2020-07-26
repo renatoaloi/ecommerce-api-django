@@ -134,12 +134,18 @@ Configure the following environment variables replacing with values of your own:
 $ export AWS_ACCESS_KEY_ID=ABCDEDEDEDDDCCCBBAAA
 $ export AWS_SECRET_ACCESS_KEY=******
 $ export AWS_DEFAULT_REGION=us-west-2
+$ export AWS_ACCOUNT_ID=938748374387
 ```
 
 Run the ```ch.sh``` script passing the stage as parameter:
 
 ```
-$ bash ./infra/ci.sh hml
+$ sudo apt-get install -y jq
+$ sudo pip3 install awscli
+$ aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+$ aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+$ eval $( aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION )
+$ bash ./infra/ci.sh $ENV $AWS_ACCOUNT_ID $AWS_DEFAULT_REGION
 ```
 
 Where ```hml``` is the stage parameter

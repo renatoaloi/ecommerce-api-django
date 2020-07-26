@@ -6,4 +6,4 @@ if [[ ! `jq --version ` ]]; then
     echo "jq not found"
 fi
 
-sudo bash ./infra/push.sh "$1" "$2"
+sudo bash ./infra/push.sh "$1" "$2" "$3"
