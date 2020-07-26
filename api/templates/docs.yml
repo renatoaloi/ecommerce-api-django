@@ -17,8 +17,42 @@ paths:
                 type: array
                 items: {}
           description: ''
+  /auth:
+    post:
+      tags: [ "User Authentication" ]
+      operationId: CreateAuthToken
+      description: "POST method requires a payload with username and password, like\
+        \ this:\n{\n    \"username\": \"your_username\",\n    \"password\": \"your\
+        \ password\"\n}"
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &my_id001
+              properties:
+                username:
+                  type: string
+                  maxLength: 255
+                password:
+                  type: string
+                  maxLength: 255
+              required:
+              - username
+              - password
+          application/x-www-form-urlencoded:
+            schema: *my_id001
+          multipart/form-data:
+            schema: *my_id001
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
   /api/customers/:
     get:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Customers" ]
       operationId: listCustomers
       description: CRUD endpoint for Customer management
@@ -53,6 +87,8 @@ paths:
                   - phone
           description: ''
     post:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Customers" ]
       operationId: createCustomer
       description: CRUD endpoint for Customer management
@@ -108,6 +144,8 @@ paths:
           description: ''
   /api/customers/{id}/:
     get:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Customers" ]
       operationId: retrieveCustomer
       description: CRUD endpoint for Customer management
@@ -146,6 +184,8 @@ paths:
                 - phone
           description: ''
     put:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Customers" ]
       operationId: updateCustomer
       description: CRUD endpoint for Customer management
@@ -206,6 +246,8 @@ paths:
                 - phone
           description: ''
     patch:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Customers" ]
       operationId: partial_updateCustomer
       description: CRUD endpoint for Customer management
@@ -262,6 +304,8 @@ paths:
                 - phone
           description: ''
     delete:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Customers" ]
       operationId: destroyCustomer
       description: CRUD endpoint for Customer management
@@ -277,6 +321,8 @@ paths:
           description: ''
   /api/products/:
     get:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Products" ]
       operationId: listProducts
       description: CRUD endpoint for Product management
@@ -312,6 +358,8 @@ paths:
                   - price
           description: ''
     post:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Products" ]
       operationId: createProduct
       description: CRUD endpoint for Product management
@@ -369,6 +417,8 @@ paths:
           description: ''
   /api/products/{id}/:
     get:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Products" ]
       operationId: retrieveProduct
       description: CRUD endpoint for Product management
@@ -408,6 +458,8 @@ paths:
                 - price
           description: ''
     put:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Products" ]
       operationId: updateProduct
       description: CRUD endpoint for Product management
@@ -470,6 +522,8 @@ paths:
                 - price
           description: ''
     patch:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Products" ]
       operationId: partial_updateProduct
       description: CRUD endpoint for Product management
@@ -527,6 +581,8 @@ paths:
                 - price
           description: ''
     delete:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Products" ]
       operationId: destroyProduct
       description: CRUD endpoint for Product management
@@ -542,6 +598,8 @@ paths:
           description: ''
   /api/invoices/:
     get:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Invoices" ]
       operationId: listInvoices
       description: CRUD endpoint for Invoice management
@@ -588,6 +646,8 @@ paths:
                   required: []
           description: ''
     post:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Invoices" ]
       operationId: createInvoice
       description: CRUD endpoint for Invoice management
@@ -647,6 +707,8 @@ paths:
           description: ''
   /api/invoices/{id}/:
     get:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Invoices" ]
       operationId: retrieveInvoice
       description: CRUD endpoint for Invoice management
@@ -697,6 +759,8 @@ paths:
                 required: []
           description: ''
     put:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Invoices" ]
       operationId: updateInvoice
       description: CRUD endpoint for Invoice management
@@ -761,6 +825,8 @@ paths:
                 required: []
           description: ''
     patch:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Invoices" ]
       operationId: partial_updateInvoice
       description: CRUD endpoint for Invoice management
@@ -823,6 +889,8 @@ paths:
                 required: []
           description: ''
     delete:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Invoices" ]
       operationId: destroyInvoice
       description: CRUD endpoint for Invoice management
@@ -838,6 +906,8 @@ paths:
           description: ''
   /api/invoiceitems/:
     get:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Invoice's Items" ]
       operationId: listInvoiceItems
       description: CRUD endpoint for Invoice's Item management
@@ -931,6 +1001,8 @@ paths:
                   - amount_paid
           description: ''
     post:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Invoice's Items" ]
       operationId: createInvoiceItem
       description: CRUD endpoint for Invoice's Item management
@@ -1047,6 +1119,8 @@ paths:
           description: ''
   /api/invoiceitems/{id}/:
     get:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Invoice's Items" ]
       operationId: retrieveInvoiceItem
       description: CRUD endpoint for Invoice's Item management
@@ -1144,6 +1218,8 @@ paths:
                 - amount_paid
           description: ''
     put:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Invoice's Items" ]
       operationId: updateInvoiceItem
       description: CRUD endpoint for Invoice's Item management
@@ -1265,6 +1341,8 @@ paths:
                 - amount_paid
           description: ''
     patch:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Invoice's Items" ]
       operationId: partial_updateInvoiceItem
       description: CRUD endpoint for Invoice's Item management
@@ -1381,6 +1459,8 @@ paths:
                 - amount_paid
           description: ''
     delete:
+      security:
+        - ApiKeyAuth: []
       tags: [ "Invoice's Items" ]
       operationId: destroyInvoiceItem
       description: CRUD endpoint for Invoice's Item management
@@ -1394,3 +1474,9 @@ paths:
       responses:
         '204':
           description: ''
+components:
+  securitySchemes:
+    ApiKeyAuth:        # arbitrary name for the security scheme
+      type: apiKey
+      in: header       # can be "header", "query" or "cookie"
+      name: AUTHORIZATION  # name of the header, query parameter or cookie

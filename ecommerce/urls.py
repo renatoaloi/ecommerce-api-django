@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
+from api import views
 
 urlpatterns = [
     # docs
@@ -23,5 +24,6 @@ urlpatterns = [
     path('openapi-schema', TemplateView.as_view(template_name='docs.yml'), name='openapi-schema'),
     # END docs
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls'))
+    path('api/', include('api.urls')),
+    path('auth', views.AuthToken.as_view()),
 ]

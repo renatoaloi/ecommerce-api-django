@@ -31,6 +31,38 @@ Run the following command to create database structure:
 $ python manage.py migrate
 ```
 
+## Create admin user
+
+In a regular prompt shell, type the following to create a super user:
+
+```
+python manage.py createsuperuser
+```
+
+Fill the create form typing:
+
+- type ```admin``` in username field
+- type ```admin@admin.com``` for email
+- type ```123456``` for password
+- type ```123456``` again to confirm
+- type ```y``` to bypass password validation
+
+> Note: remember to change admin's password later
+
+Now bring the server up:
+
+```
+$ python manage.py runserver
+```
+
+And navigate to ```http://localhost:8000/admin```
+
+Fill up login form with admin credentials we've created just now.
+
+> Note: Now it's a good time to change admin's password.
+
+Create more users as needed.
+
 ## Usage
 
 Just bring the server online with this command:
@@ -40,7 +72,25 @@ $ source ./env/bin/activate
 $ python manage.py runserver
 ```
 
-And navigate to http://localhost:8000/api to list endpoints and REST methods available.
+And navigate to http://localhost:8000 to get access to the interactive documentation.
+
+Steps to authenticate:
+
+- First call ```auth``` endpoint to get authenticated.
+- Copy token value from response body
+- Click authorize button and fill ApiKeyAuth with token preceeded by "Token" string
+- Finally click Authorize button
+
+ApiKey Example:
+```
+Token 1b7c9e36b002fdfa9598e3932d56e08b52c55d67
+```
+
+CURL example:
+```
+curl -X GET "http://localhost:8000/api/customers/" -H  "accept: application/json" -H  "AUTHORIZATION: Token 1b7c9e36b002fdfa9598e3932d56e08b52c55d67"
+```
+
 
 ## Unit testing
 

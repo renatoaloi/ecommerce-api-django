@@ -3,6 +3,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from rest_framework import status
 import json
+from django.contrib.auth.models import User
 
 class TestEcommerceApi(TestCase):
     """
@@ -12,7 +13,7 @@ class TestEcommerceApi(TestCase):
     #private
     def _create_model(self, model, data, fields):
         self.url = reverse("{}-list".format(model))
-        response = self.client.post(self.url, data)
+        response = self.client.post(self.url, data, **self.auth_headers)
         if response.status_code == status.HTTP_201_CREATED:
             r_json = response.json()
             # check for the fields
@@ -34,7 +35,7 @@ class TestEcommerceApi(TestCase):
     
     def _detail_model(self, model, data, id, fields):
         self.url = reverse("{}-detail".format(model), kwargs={'pk': id})
-        response = self.client.get(self.url)
+        response = self.client.get(self.url, **self.auth_headers)
         if response.status_code == status.HTTP_200_OK:
             r_json = response.json()
             # check for the fields
@@ -52,7 +53,7 @@ class TestEcommerceApi(TestCase):
 
     def _update_model(self, model, id, data, data_names):
         self.url = reverse("{}-detail".format(model), kwargs={'pk': id})
-        response = self.client.put(self.url, data, content_type="application/json")
+        response = self.client.put(self.url, data, content_type="application/json", **self.auth_headers)
         if response.status_code == status.HTTP_200_OK:
             r_json = response.json()
             # check if the name really changed
@@ -63,11 +64,11 @@ class TestEcommerceApi(TestCase):
 
     def _delete_model(self, model, id):
         self.url = reverse("{}-detail".format(model), kwargs={'pk': id})
-        response = self.client.delete(self.url)
+        response = self.client.delete(self.url, **self.auth_headers)
         if response.status_code == status.HTTP_204_NO_CONTENT:
             # call detail again to check if it was really deleted
             self.url = reverse("{}-detail".format(model), kwargs={'pk': id})
-            response_confirm = self.client.get(self.url)
+            response_confirm = self.client.get(self.url, **self.auth_headers)
             # response must be not found
             self.assertEqual(status.HTTP_404_NOT_FOUND, response_confirm.status_code)
 
@@ -79,6 +80,8 @@ class TestEcommerceApi(TestCase):
         This method runs before execution of each test case
         """
         self.client = Client()
+        self.token = ""
+        self.auth_headers = ""
         # mockup's
         self.customer_data = {
             "name": "Create Test Case",
@@ -100,6 +103,31 @@ class TestEcommerceApi(TestCase):
             "quantity": 10,
             "amount_paid": 9.99
         }
+        self.auth_user = {
+            "first_name": "Renato",
+            "last_name": "Aloi",
+            "username": "renato.aloi",
+            "password": "123456",
+            "email": "renato.aloi@gmail.com"
+        }
+
+        # trying to get a token
+        try:
+            # create user
+            user = User.objects.create_user(
+                self.auth_user["username"],
+                self.auth_user["email"],
+                self.auth_user["password"]
+            )
+            user.first_name = self.auth_user["first_name"]
+            user.last_name = self.auth_user["last_name"]
+            user.save()
+            response = self.client.post("/auth", self.auth_user)
+            if response.status_code == 200:
+                self.token = response.data["token"] if "token" in response.data else ""
+                self.auth_headers = { "HTTP_AUTHORIZATION": "Token {}".format(self.token)}
+        except Exception as e:
+            print(str(e))
 
 
     # Testing health check
@@ -108,7 +136,7 @@ class TestEcommerceApi(TestCase):
         This test case checks if health check endpoint is responsive
         """
         self.url = reverse("health-check")
-        response = self.client.get(self.url)
+        response = self.client.get(self.url, **self.auth_headers)
         self.assertEqual(200, response.status_code)
 
 
@@ -118,7 +146,7 @@ class TestEcommerceApi(TestCase):
         This test case checks if customer list endpoint is working as expected
         """
         self.url = reverse("customer-list")
-        response = self.client.get(self.url)
+        response = self.client.get(self.url, **self.auth_headers)
         self.assertEqual(200, response.status_code)
 
 
@@ -178,7 +206,7 @@ class TestEcommerceApi(TestCase):
         This test case checks if product list endpoint is working as expected
         """
         self.url = reverse("product-list")
-        response = self.client.get(self.url)
+        response = self.client.get(self.url, **self.auth_headers)
         self.assertEqual(200, response.status_code)
 
 
@@ -239,7 +267,7 @@ class TestEcommerceApi(TestCase):
         This test case checks if invoice list endpoint is working as expected
         """
         self.url = reverse("invoice-list")
-        response = self.client.get(self.url)
+        response = self.client.get(self.url, **self.auth_headers)
         self.assertEqual(200, response.status_code)
 
 
@@ -318,7 +346,7 @@ class TestEcommerceApi(TestCase):
         This test case checks if invoice's item list endpoint is working as expected
         """
         self.url = reverse("invoiceitem-list")
-        response = self.client.get(self.url)
+        response = self.client.get(self.url, **self.auth_headers)
         self.assertEqual(200, response.status_code)
 
 
@@ -435,3 +463,28 @@ class TestEcommerceApi(TestCase):
             self.assertIsNotNone(id_inv)
         self.assertIsNotNone(id)
     # END invoice's item CRUD
+
+
+    # Testing Auth Token
+    def test_auth_token_valid_user(self):
+        """
+        This test case checks if auth token method works with a 
+        designed pair of username and password keys
+        """
+        self.url = "/auth"
+        ok_pass_user = { **self.auth_user }
+        response = self.client.post(self.url, ok_pass_user)
+        self.assertEqual(200, response.status_code)
+    
+
+    def test_auth_token_invalid_password(self):
+        """
+        This test case checks if auth token method fails when wrong password is informed
+        """
+        self.url = "/auth"
+        wrong_pass_user = { **self.auth_user }
+        wrong_pass_user["password"] = "1234567"
+        response = self.client.post(self.url, wrong_pass_user)
+        # for wrong password must not be status code 200!
+        self.assertNotEqual(200, response.status_code)
+    # END Testing Auth Token
