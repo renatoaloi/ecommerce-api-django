@@ -1,5 +1,5 @@
 {
-    "projectName": "lucree-api-comercial",
+    "projectName": "ecommerce",
     "cpu":256,
     "memory":512,
     "desiredCount": 1,
@@ -12,7 +12,6 @@
     ],
     "settings":{
         "hml":{
-            "certificateARN": "arn:aws:acm:us-west-2:175572419266:certificate/b3584131-0ff3-43a4-9db6-0206e1d57fdb",
             "network":{
                 "assignPublicIp": "ENABLED",
                 "subnets": [
@@ -29,16 +28,9 @@
                 ]
             },
             "environments": {
-                "RDS_DB_NAME": "subadiqdb1",
-                "RDS_USERNAME": "subadiqdb",
-                "RDS_PASSWORD": "1o5gHogS",
-                "RDS_HOSTNAME": "subadiq-homolog.cxmg4sq9azs9.us-west-2.rds.amazonaws.com",
-                "DB_OPTIONS": "-c search_path=credenciamento",
-                "SECRET_KEY": "&e!5keuf=2av%uiyqj-c=82ub#n+v0sjgx+nsv9rms2j1gf9le"
             }
         },
         "prod": {
-            "certificateARN": "arn:aws:acm:us-west-2:175572419266:certificate/b3584131-0ff3-43a4-9db6-0206e1d57fdb",
             "network":{
                 "assignPublicIp": "ENABLED",
                 "subnets": [
@@ -59,12 +51,6 @@
                 ]
             },
             "environments": {
-                "RDS_DB_NAME": "subadiqdb1",
-                "RDS_USERNAME": "subadiqdb",
-                "RDS_PASSWORD": "SubAd1q32f",
-                "RDS_HOSTNAME": "transacsubadiq.cxmg4sq9azs9.us-west-2.rds.amazonaws.com",
-                "DB_OPTIONS": "-c search_path=credenciamento",
-                "SECRET_KEY": "&e!5keuf=2av%uiyqj-c=82ub#n+v0sjgx+nsv9rms2j1gf9le"
             }
         }
     }
