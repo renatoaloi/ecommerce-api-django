@@ -1,0 +1,71 @@
+{
+    "projectName": "lucree-api-comercial",
+    "cpu":256,
+    "memory":512,
+    "desiredCount": 1,
+    "portMappings":[
+        {
+            "protocol": "tcp",
+            "containerPort": 80,
+            "hostPort": 80
+        }
+    ],
+    "settings":{
+        "hml":{
+            "certificateARN": "arn:aws:acm:us-west-2:175572419266:certificate/b3584131-0ff3-43a4-9db6-0206e1d57fdb",
+            "network":{
+                "assignPublicIp": "ENABLED",
+                "subnets": [
+                    "subnet-0de4da33e830fd6e8",
+                    "subnet-074eb9ab8523354aa",
+                    "subnet-00814b28b6a2c5503"
+                ],
+                "securityGroups": [ "sg-01540ffbef59b0f51" ]
+            },
+            "loadBalancer":{
+                "subnets": [
+                    "subnet-00814b28b6a2c5503",
+                    "subnet-0e475aafb0b4fc100"  
+                ]
+            },
+            "environments": {
+                "RDS_DB_NAME": "subadiqdb1",
+                "RDS_USERNAME": "subadiqdb",
+                "RDS_PASSWORD": "1o5gHogS",
+                "RDS_HOSTNAME": "subadiq-homolog.cxmg4sq9azs9.us-west-2.rds.amazonaws.com",
+                "DB_OPTIONS": "-c search_path=credenciamento",
+                "SECRET_KEY": "&e!5keuf=2av%uiyqj-c=82ub#n+v0sjgx+nsv9rms2j1gf9le"
+            }
+        },
+        "prod": {
+            "certificateARN": "arn:aws:acm:us-west-2:175572419266:certificate/b3584131-0ff3-43a4-9db6-0206e1d57fdb",
+            "network":{
+                "assignPublicIp": "ENABLED",
+                "subnets": [
+                    "subnet-069b4cc8898ec7708",
+                    "subnet-01a2db17a3e4cc521",
+                    "subnet-0426a8959dc215581"
+                ],
+                "securityGroups":[
+                    "sg-57861622"
+                ]
+            },
+            "loadBalancer":{
+                "subnets":[
+                    "subnet-3ce6ae14",
+                    "subnet-95b693ec",
+                    "subnet-c552659f",
+                    "subnet-cc591f87"
+                ]
+            },
+            "environments": {
+                "RDS_DB_NAME": "subadiqdb1",
+                "RDS_USERNAME": "subadiqdb",
+                "RDS_PASSWORD": "SubAd1q32f",
+                "RDS_HOSTNAME": "transacsubadiq.cxmg4sq9azs9.us-west-2.rds.amazonaws.com",
+                "DB_OPTIONS": "-c search_path=credenciamento",
+                "SECRET_KEY": "&e!5keuf=2av%uiyqj-c=82ub#n+v0sjgx+nsv9rms2j1gf9le"
+            }
+        }
+    }
+}
