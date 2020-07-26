@@ -35,5 +35,4 @@ jobs:
     - name: Run Script
       env:
         ENV: hml
-      if: job.steps.tests.status == success()
       run: ./infra/ci.sh ${{ env.ENV }}
