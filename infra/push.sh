@@ -70,6 +70,8 @@ puts "CONTAINER: $CONTAINER_NAME"
 puts "IMAGE: $IMAGE_NAME"
 puts "LOADBALANCER: $LOADBALANCER"
 
+export AWS_DEFAULT_REGION="$REGION"
+
 
 if [[ -z `aws ecr describe-repositories | grep "$REPOSITORY"` ]]; then
   puts "Criando Repositorio"
