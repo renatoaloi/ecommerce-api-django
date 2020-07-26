@@ -3,7 +3,7 @@
 export TERM=xterm-256color
 
 sudo apt-get update && apt-get install -y jq
-pip3 install awscli
+sudo pip3 install awscli
 
 if [[ ! `jq --version ` ]]; then
     echo "jq not found"
