@@ -1,5 +1,9 @@
 # ecommerce-api-django
 
+## Demo
+
+![](demo.gif)
+
 ## Clone the repo
 
 Clone this Git repository and navigate to the cloned folder
