@@ -24,7 +24,7 @@ success () {
 
 
 load_config(){
-  if [[ ! -e "config.json" ]]; then
+  if [[ ! -e "infra/config.json" ]]; then
     error "Missing ecs.config.json"
   fi
   CONFIG=`cat config.json | jq -r .`
