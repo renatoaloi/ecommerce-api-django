@@ -52,7 +52,7 @@ if [[ -z "$REGION" ]]; then
 fi
 
 # setting image name
-IMAGE_NAME="$2"+".dkr.ecr.$REGION.amazonaws.com/$REPOSITORY:$1"
+IMAGE_NAME="$2.dkr.ecr.$REGION.amazonaws.com/$REPOSITORY:$1"
 SERVICE_NAME="$REPOSITORY"-"$1"-service
 CONTAINER_NAME="$REPOSITORY"-"$1"-container
 TASK_NAME="$REPOSITORY"-"$1"-task
@@ -60,6 +60,7 @@ CLUSTER_NAME="$REPOSITORY"-"$1"
 LOADBALANCER="$REPOSITORY"-"$1"-elb
 TARGET_GROUP="$REPOSITORY"-"$1"-target
 
+puts "ACCOUNT_ID: $2"
 puts "REGION: $REGION"
 puts "REPOSITORY: $REPOSITORY"
 puts "SERVICE: $SERVICE_NAME"
