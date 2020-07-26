@@ -52,7 +52,7 @@ if [[ -z "$REGION" ]]; then
 fi
 
 # setting image name
-IMAGE_NAME="175572419266.dkr.ecr.$REGION.amazonaws.com/$REPOSITORY:$1"
+IMAGE_NAME="$2"+".dkr.ecr.$REGION.amazonaws.com/$REPOSITORY:$1"
 SERVICE_NAME="$REPOSITORY"-"$1"-service
 CONTAINER_NAME="$REPOSITORY"-"$1"-container
 TASK_NAME="$REPOSITORY"-"$1"-task

@@ -31,5 +31,16 @@ jobs:
     - name: Run Script
       env:
         ENV: hml
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_DEFAULT_REGION: us-west-2
       run: |
-        bash ./infra/ci.sh ${{ env.ENV }}
+        apt-get install -y jq
+        pip3 install awscli
+
+        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+        eval $( aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION )
+
+        bash ./infra/ci.sh $ENV $AWS_ACCOUNT_ID
