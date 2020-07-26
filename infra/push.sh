@@ -201,7 +201,7 @@ if [[ ! $load_balancer  ]]; then
 
     puts "Criando listening"
     echo "aws elbv2 create-listener --load-balancer-arn $loadARN --protocol HTTP --port 80 --default-actions Type=forward,TargetGroupArn=$targetARN"
-    if [[ ! `aws elbv2 create-listener --load-balancer-arn $loadARN --protocol HTTP --port --default-actions Type=forward,TargetGroupArn=$targetARN` ]]; then
+    if [[ ! `aws elbv2 create-listener --load-balancer-arn $loadARN --protocol HTTP --port 80 --default-actions Type=forward,TargetGroupArn=$targetARN` ]]; then
       error "Error ao criar listening"
     fi
   fi
