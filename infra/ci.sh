@@ -11,4 +11,4 @@ if [[ ! `jq --version ` ]]; then
 fi
 sudo apt install -y awscli
 
-sudo bash push.sh "$1"
+sudo bash ./infra/push.sh "$1"
