@@ -32,4 +32,4 @@ jobs:
       env:
         ENV: hml
       run: |
-        ./infra/ci.sh ${{ env.ENV }}
+        bash ./infra/ci.sh ${{ env.ENV }}
