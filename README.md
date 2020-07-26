@@ -125,3 +125,21 @@ Type the following in a terminal window:
 $ source ./env/bin/activate
 $ python manage.py test api
 ```
+
+## Deploying
+
+Configure the following environment variables replacing with values of your own:
+
+```
+$ export AWS_ACCESS_KEY_ID=ABCDEDEDEDDDCCCBBAAA
+$ export AWS_SECRET_ACCESS_KEY=******
+$ export AWS_DEFAULT_REGION=us-west-2
+```
+
+Run the ```ch.sh``` script passing the stage as parameter:
+
+```
+$ bash ./infra/ci.sh hml
+```
+
+Where ```hml``` is the stage parameter

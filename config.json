@@ -15,16 +15,16 @@
             "network":{
                 "assignPublicIp": "ENABLED",
                 "subnets": [
-                    "subnet-0de4da33e830fd6e8",
-                    "subnet-074eb9ab8523354aa",
-                    "subnet-00814b28b6a2c5503"
+                    "subnet-09fc1462",
+                    "subnet-0afc1461",
+                    "subnet-0afc1460"
                 ],
-                "securityGroups": [ "sg-01540ffbef59b0f51" ]
+                "securityGroups": [ "sg-dbfd16aa" ]
             },
             "loadBalancer":{
                 "subnets": [
-                    "subnet-00814b28b6a2c5503",
-                    "subnet-0e475aafb0b4fc100"  
+                    "subnet-09fc1462",
+                    "subnet-0afc1461"  
                 ]
             },
             "environments": {
@@ -34,20 +34,18 @@
             "network":{
                 "assignPublicIp": "ENABLED",
                 "subnets": [
-                    "subnet-069b4cc8898ec7708",
-                    "subnet-01a2db17a3e4cc521",
-                    "subnet-0426a8959dc215581"
+                    "subnet-09fc1462",
+                    "subnet-0afc1461",
+                    "subnet-0afc1460"
                 ],
                 "securityGroups":[
-                    "sg-57861622"
+                    "sg-dbfd16aa"
                 ]
             },
             "loadBalancer":{
                 "subnets":[
-                    "subnet-3ce6ae14",
-                    "subnet-95b693ec",
-                    "subnet-c552659f",
-                    "subnet-cc591f87"
+                    "subnet-09fc1462",
+                    "subnet-0afc1461" 
                 ]
             },
             "environments": {
