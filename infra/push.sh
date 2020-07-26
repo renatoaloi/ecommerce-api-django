@@ -191,7 +191,7 @@ if [[ ! $load_balancer  ]]; then
     fi
   else
     # para https
-    puts "Criando target group HTTPS"
+    puts "Criando target group HTTP"
     target=`aws elbv2 create-target-group --name $TARGET_GROUP --port 80 --protocol HTTP --target-type ip --vpc-id $vpcID --health-check-interval-seconds 180 --health-check-timeout-seconds 60`
     if [[ ! $target ]]; then
       error "Error ao criar target group"

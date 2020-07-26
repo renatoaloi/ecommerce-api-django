@@ -16,8 +16,7 @@
                 "assignPublicIp": "ENABLED",
                 "subnets": [
                     "subnet-09fc1462",
-                    "subnet-0afc1461",
-                    "subnet-0afc1460"
+                    "subnet-0afc1461"
                 ],
                 "securityGroups": [ "sg-dbfd16aa" ]
             },
@@ -35,8 +34,7 @@
                 "assignPublicIp": "ENABLED",
                 "subnets": [
                     "subnet-09fc1462",
-                    "subnet-0afc1461",
-                    "subnet-0afc1460"
+                    "subnet-0afc1461"
                 ],
                 "securityGroups":[
                     "sg-dbfd16aa"
