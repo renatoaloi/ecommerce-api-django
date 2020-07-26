@@ -4,6 +4,25 @@
 
 ![](demo2.gif)
 
+
+## Setting up the environment
+
+If you will, you can raise up a Ubuntu's docker container to host all that stuff, and yet expose 8000 port
+
+```
+$ docker run -it --rm -p 8000:8000 ubuntu /bin/bash
+```
+
+And install the basic software:
+
+> Requires: Python 3.8
+
+```
+$ apt-get update
+$ apt-get install -y git python3.8 python3.8-venv python3-venv python3-pip
+$ python3.8 -m pip install --upgrade pip
+```
+
 ## Clone the repo
 
 Clone this Git repository and navigate to the cloned folder
@@ -13,14 +32,10 @@ $ git clone https://github.com/renatoaloi/ecommerce-api-django.git
 $ cd ecommerce-api-django
 ```
 
-## Setting up the environment
-
 Create an virtual environment and install requirements.
 
-> Required: Python 3
-
 ```
-$ virtualenv env
+$ python3.8 -m venv env
 $ source ./env/bin/activate
 $ pip install -r requirements.txt
 ```
@@ -57,6 +72,12 @@ Now bring the server up:
 
 ```
 $ python manage.py runserver
+```
+
+or if you are inside a docker container, you could use:
+
+```
+$ python manage.py runserver 0.0.0.0:8000
 ```
 
 And navigate to ```http://localhost:8000/admin```
