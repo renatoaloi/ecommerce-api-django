@@ -16,8 +16,6 @@ jobs:
         python-version: [3.8]
 
     steps:
-    - env:
-        ENV: hml
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
@@ -28,5 +26,7 @@ jobs:
       run: |
         python manage.py test
     - name: Run Script
+      env:
+        ENV: hml
       if: job.steps.tests.status == success()
       run: ./infra/ci.sh ${{ env.ENV }}
