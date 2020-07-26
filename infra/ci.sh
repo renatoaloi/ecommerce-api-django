@@ -2,7 +2,8 @@
 
 export TERM=xterm-256color
 
-sudo apt-get update && apt-get install -y jq
+sudo apt-get update
+sudo apt-get install -y jq
 sudo pip3 install awscli
 
 if [[ ! `jq --version ` ]]; then
@@ -10,4 +11,4 @@ if [[ ! `jq --version ` ]]; then
 fi
 sudo apt install -y awscli
 
-bash push.sh "$1"
+sudo bash push.sh "$1"
