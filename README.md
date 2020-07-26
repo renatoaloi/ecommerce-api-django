@@ -2,7 +2,7 @@
 
 ## Demo
 
-![](demo.gif)
+![](demo2.gif)
 
 ## Clone the repo
 
