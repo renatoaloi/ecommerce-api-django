@@ -18,6 +18,9 @@ class Product(models.Model):
 
 class Invoice(models.Model):
     customer = models.ForeignKey("Customer", related_name="customers", on_delete=models.DO_NOTHING)
+    total_value = models.FloatField()
+    total_quantity = models.IntegerField()
+    total_discount = models.FloatField()
     purchase_date = models.DateTimeField(auto_now_add=True)
 
 
@@ -25,5 +28,16 @@ class InvoiceItem(models.Model):
     invoice = models.ForeignKey("Invoice", related_name="invoices", on_delete=models.DO_NOTHING)
     quantity = models.IntegerField()
     product = models.ForeignKey("Product", related_name="products", on_delete=models.DO_NOTHING)
-    amount_paid = models.FloatField()
+    quote_price = models.FloatField()
+    discount_value = models.FloatField()
     creation_date = models.DateTimeField(auto_now_add=True)
+
+
+class ShoppingCart(models.Model):
+    customer = models.ForeignKey("Customer", related_name="customers", on_delete=models.DO_NOTHING)
+    product = models.ForeignKey("Product", related_name="products", on_delete=models.DO_NOTHING)
+    quantity = models.IntegerField()
+    discount_value = models.FloatField()
+    creation_date = models.DateTimeField(auto_now_add=True)
+    closed_date = models.DateTimeField(auto_now=True)
+    is_closed = models.BooleanField()
