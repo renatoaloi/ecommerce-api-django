@@ -95,13 +95,24 @@ class TestEcommerceApi(TestCase):
             "price": .99
         }
         self.invoice_data = {
-            "customer_id": 0
+            "customer_id": 0,
+            "total_value": 0.0,
+            "total_quantity": 0.0,
+            "total_discount": 0.0
         }
         self.invoice_item_data = {
             "invoice_id": 0,
             "product_id": 0,
             "quantity": 10,
-            "amount_paid": 9.99
+            "quote_price": 9.99,
+            "discount_value": 0.0
+        }
+        self.shopping_cart_data = {
+            "customer_id": 0,
+            "product_id": 0,
+            "quantity": 0,
+            "discount_value": 0.0,
+            "is_closed": False
         }
         self.auth_user = {
             "first_name": "Renato",
@@ -369,7 +380,7 @@ class TestEcommerceApi(TestCase):
                     data = self.invoice_item_data
                     data["invoice_id"] = id_inv
                     data["product_id"] = id_prod
-                    self._create_model("invoiceitem", data, ["quantity", "amount_paid"])
+                    self._create_model("invoiceitem", data, ["quantity", "quote_price"])
                 self.assertIsNotNone(id_prod)
             self.assertIsNotNone(id_inv)
         self.assertIsNotNone(id)
@@ -394,10 +405,10 @@ class TestEcommerceApi(TestCase):
                     data = self.invoice_item_data
                     data["invoice_id"] = id_inv
                     data["product_id"] = id_prod
-                    id_itm = self._create_model("invoiceitem", data, [ "quantity", "amount_paid" ])
+                    id_itm = self._create_model("invoiceitem", data, [ "quantity", "quote_price" ])
                     if id_itm:
                         # then performing detail
-                        self._detail_model("invoiceitem", self.invoice_item_data, id, [ "quantity", "amount_paid" ])
+                        self._detail_model("invoiceitem", self.invoice_item_data, id, [ "quantity", "quote_price" ])
                     self.assertIsNotNone(id_itm)
                 self.assertIsNotNone(id_prod)
             self.assertIsNotNone(id_inv)
@@ -423,12 +434,12 @@ class TestEcommerceApi(TestCase):
                     data = self.invoice_item_data
                     data["invoice_id"] = id_inv
                     data["product_id"] = id_prod
-                    id_itm = self._create_model("invoiceitem", data, [ "quantity", "amount_paid" ])
+                    id_itm = self._create_model("invoiceitem", data, [ "quantity", "quote_price" ])
                     if id_itm:
                         # then performe update
                         data = self.invoice_item_data
                         data["price_paid"] = 88.77
-                        self._update_model("invoiceitem", id, data, ["amount_paid"])
+                        self._update_model("invoiceitem", id, data, ["quote_price"])
                     self.assertIsNotNone(id_itm)
                 self.assertIsNotNone(id_prod)
             self.assertIsNotNone(id_inv)
@@ -454,7 +465,7 @@ class TestEcommerceApi(TestCase):
                     data = self.invoice_item_data
                     data["invoice_id"] = id_inv
                     data["product_id"] = id_prod
-                    id_itm = self._create_model("invoiceitem", data, [ "quantity", "amount_paid" ])
+                    id_itm = self._create_model("invoiceitem", data, [ "quantity", "quote_price" ])
                     if id_itm:
                         # then performe delete
                         self._delete_model("invoiceitem", id_itm)
