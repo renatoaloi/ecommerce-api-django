@@ -1,6 +1,9 @@
 name: Django CI
 
 on:
+  create:
+    tags:
+      - release-*
   push:
     branches: [ master ]
   pull_request:
@@ -17,6 +20,13 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Set env
+        run: |
+          echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
+    - name: Test
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ env.RELEASE_VERSION }}
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
