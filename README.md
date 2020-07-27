@@ -1,4 +1,9 @@
 # ecommerce-api-django
+Python/Django E-Commerce API
+
+![](https://img.shields.io/github/languages/top/renatoaloi/ecommerce-api-django)
+![](https://img.shields.io/github/workflow/status/renatoaloi/ecommerce-api-django/Django%20CI%20Prod)
+![](https://img.shields.io/github/v/release/renatoaloi/ecommerce-api-django?include_prereleases)
 
 ## Demo
 
