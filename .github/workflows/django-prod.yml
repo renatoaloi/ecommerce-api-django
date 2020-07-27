@@ -1,10 +1,9 @@
 name: Django CI
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  create:
+    tags:
+      - release-*
 
 jobs:
   build:
@@ -43,7 +42,7 @@ jobs:
         echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@admin.com', '123456')" | python manage.py shell
     - name: Run Script
       env:
-        ENV: hml
+        ENV: prod
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
