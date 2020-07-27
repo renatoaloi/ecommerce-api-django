@@ -2,8 +2,8 @@ name: Django CI Prod
 
 on:
   create:
-    tags:
-      - '*'
+      tags:
+        - '*'
 
 jobs:
   build:
