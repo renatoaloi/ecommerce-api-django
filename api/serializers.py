@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Customer, Invoice, InvoiceItem, Product
+from .models import Customer, Invoice, InvoiceItem, Product, ShoppingCart
 
 
 class CustomerSerializer(serializers.ModelSerializer):
@@ -31,4 +31,15 @@ class InvoiceItemSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = InvoiceItem
+        fields = '__all__'
+
+
+class ShoppingCartSerializer(serializers.ModelSerializer):
+    customer = CustomerSerializer(read_only=True)
+    customer_id = serializers.IntegerField(write_only=True)
+    product = ProductSerializer(read_only=True)
+    product_id = serializers.IntegerField(write_only=True)
+
+    class Meta:
+        model = ShoppingCart
         fields = '__all__'
