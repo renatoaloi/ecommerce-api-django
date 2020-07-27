@@ -3,8 +3,8 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
-from api.serializers import CustomerSerializer, InvoiceSerializer, ProductSerializer, InvoiceItemSerializer
-from api.models import Customer, Invoice, Product, InvoiceItem
+from api.serializers import CustomerSerializer, InvoiceSerializer, ProductSerializer, InvoiceItemSerializer, ShoppingCartSerializer
+from api.models import Customer, Invoice, Product, InvoiceItem, ShoppingCart
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 
@@ -57,6 +57,15 @@ class InvoiceItemViewSet(ModelViewSet):
     serializer_class = InvoiceItemSerializer
 
 
+class ShoppingCartViewSet(ModelViewSet):
+    """
+    CRUD endpoint for shopping cart management
+    """
+    permission_classes = (IsAuthenticated,)
+    queryset = ShoppingCart.objects.all()
+    serializer_class = ShoppingCartSerializer
+
+
 class AuthToken(APIView):
     """
     Authentication endpoint to get user's auth token
@@ -86,3 +95,22 @@ class AuthToken(APIView):
         except Exception as e:
             print(str(e))
         return Response({"message": "Auth Invalid", "token": ""}, status=404)
+
+
+class UpdateShoppingCart(APIView):
+    """
+    Endpoint for update user's shopping cart
+    """
+    def post(self, request):
+        data = request.data
+        cart = ShoppingCart.objects.filter(id=data["id"]).first()
+        if cart:
+            # checking if it's closed
+            if cart.is_closed:
+                return Response({"message": "Error! Cart already closed!", "cart": {}}, status=400)
+        # else continues
+        serializer = ShoppingCartSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+        return Response({"message": "OK", "cart": serializer.data}, status=200)
+

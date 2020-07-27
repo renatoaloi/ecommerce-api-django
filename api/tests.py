@@ -95,13 +95,24 @@ class TestEcommerceApi(TestCase):
             "price": .99
         }
         self.invoice_data = {
-            "customer_id": 0
+            "customer_id": 0,
+            "total_value": 0.0,
+            "total_quantity": 0.0,
+            "total_discount": 0.0
         }
         self.invoice_item_data = {
             "invoice_id": 0,
             "product_id": 0,
             "quantity": 10,
-            "amount_paid": 9.99
+            "quote_price": 9.99,
+            "discount_value": 0.0
+        }
+        self.shoppingcart_data = {
+            "customer_id": 0,
+            "product_id": 0,
+            "quantity": 0,
+            "discount_value": 0.0,
+            "is_closed": False
         }
         self.auth_user = {
             "first_name": "Renato",
@@ -327,15 +338,21 @@ class TestEcommerceApi(TestCase):
         self.assertIsNotNone(id)
 
 
-    def test_product_delete(self):
+    def test_invoice_delete(self):
         """
-        This test case checks if product delete endpoint is working as expected
+        This test case checks if invoice delete endpoint is working as expected
         """
-        # first performe create
-        id = self._create_model("product", self.product_data, ["name", "description", "image_link", "price"])
+        # first we create a customer
+        id = self._create_model("customer", self.customer_data, ["name", "email", "phone"])
         if id:
-            # then performe delete
-            self._delete_model("product", id)
+            # then we can create the invoice
+            data = self.invoice_data
+            data["customer_id"] = id
+            id_inv = self._create_model("invoice", data, [])
+            if id_inv:
+                # then performe delete
+                self._delete_model("invoice", id_inv)
+            self.assertIsNotNone(id_inv)
         self.assertIsNotNone(id)
     # END invoice CRUD
 
@@ -369,7 +386,7 @@ class TestEcommerceApi(TestCase):
                     data = self.invoice_item_data
                     data["invoice_id"] = id_inv
                     data["product_id"] = id_prod
-                    self._create_model("invoiceitem", data, ["quantity", "amount_paid"])
+                    self._create_model("invoiceitem", data, ["quantity", "quote_price"])
                 self.assertIsNotNone(id_prod)
             self.assertIsNotNone(id_inv)
         self.assertIsNotNone(id)
@@ -394,10 +411,10 @@ class TestEcommerceApi(TestCase):
                     data = self.invoice_item_data
                     data["invoice_id"] = id_inv
                     data["product_id"] = id_prod
-                    id_itm = self._create_model("invoiceitem", data, [ "quantity", "amount_paid" ])
+                    id_itm = self._create_model("invoiceitem", data, [ "quantity", "quote_price" ])
                     if id_itm:
                         # then performing detail
-                        self._detail_model("invoiceitem", self.invoice_item_data, id, [ "quantity", "amount_paid" ])
+                        self._detail_model("invoiceitem", self.invoice_item_data, id, [ "quantity", "quote_price" ])
                     self.assertIsNotNone(id_itm)
                 self.assertIsNotNone(id_prod)
             self.assertIsNotNone(id_inv)
@@ -423,12 +440,12 @@ class TestEcommerceApi(TestCase):
                     data = self.invoice_item_data
                     data["invoice_id"] = id_inv
                     data["product_id"] = id_prod
-                    id_itm = self._create_model("invoiceitem", data, [ "quantity", "amount_paid" ])
+                    id_itm = self._create_model("invoiceitem", data, [ "quantity", "quote_price" ])
                     if id_itm:
                         # then performe update
                         data = self.invoice_item_data
                         data["price_paid"] = 88.77
-                        self._update_model("invoiceitem", id, data, ["amount_paid"])
+                        self._update_model("invoiceitem", id, data, ["quote_price"])
                     self.assertIsNotNone(id_itm)
                 self.assertIsNotNone(id_prod)
             self.assertIsNotNone(id_inv)
@@ -454,7 +471,7 @@ class TestEcommerceApi(TestCase):
                     data = self.invoice_item_data
                     data["invoice_id"] = id_inv
                     data["product_id"] = id_prod
-                    id_itm = self._create_model("invoiceitem", data, [ "quantity", "amount_paid" ])
+                    id_itm = self._create_model("invoiceitem", data, [ "quantity", "quote_price" ])
                     if id_itm:
                         # then performe delete
                         self._delete_model("invoiceitem", id_itm)
@@ -463,6 +480,168 @@ class TestEcommerceApi(TestCase):
             self.assertIsNotNone(id_inv)
         self.assertIsNotNone(id)
     # END invoice's item CRUD
+
+
+    # Testing shoppingcart CRUD
+    def test_shoppingcart_list(self):
+        """
+        This test case checks if shoppingcart list endpoint is working as expected
+        """
+        self.url = reverse("shoppingcart-list")
+        response = self.client.get(self.url, **self.auth_headers)
+        self.assertEqual(200, response.status_code)
+
+
+    def test_shoppingcart_create(self):
+        """
+        This test case checks if shoppingcart create endpoint is working as expected
+        """
+        # first we create a customer
+        id = self._create_model("customer", self.customer_data, ["name", "email", "phone"])
+        if id:
+            # then we create a product
+            id_prod = self._create_model("product", self.product_data, ["name", "description", "image_link", "price"])
+            if id_prod:
+                # then we can create the shoppingcart
+                data = self.shoppingcart_data
+                data["customer_id"] = id
+                data["product_id"] = id
+                self._create_model("shoppingcart", data, [ "quantity", "discount_value", "is_closed" ])
+            self.assertIsNotNone(id_prod)
+        self.assertIsNotNone(id)
+
+
+    def test_shoppingcart_detail(self):
+        """
+        This test case checks if shoppingcart detail endpoint is working as expected
+        """
+        # first we create a customer
+        id = self._create_model("customer", self.customer_data, ["name", "email", "phone"])
+        if id:
+            # then we create a product
+            id_prod = self._create_model("product", self.product_data, ["name", "description", "image_link", "price"])
+            if id_prod:
+                # then we can create the shoppingcart
+                data = self.shoppingcart_data
+                data["customer_id"] = id
+                data["product_id"] = id
+                id_cart = self._create_model("shoppingcart", data, ["quantity", "discount_value", "is_closed"])
+                if id_cart:
+                    # then performing detail
+                    self._detail_model("shoppingcart", self.shoppingcart_data, id, ["quantity", "discount_value", "is_closed"])
+                self.assertIsNotNone(id_cart)
+            self.assertIsNotNone(id_prod)
+        self.assertIsNotNone(id)
+
+
+    def test_shoppingcart_update(self):
+        """
+        This test case checks if shoppingcart update endpoint is working as expected
+        """
+        # first we create a customer
+        id = self._create_model("customer", self.customer_data, ["name", "email", "phone"])
+        if id:
+            # then we create a product
+            id_prod = self._create_model("product", self.product_data, ["name", "description", "image_link", "price"])
+            if id_prod:
+                # then we can create the shoppingcart
+                data = self.shoppingcart_data
+                data["customer_id"] = id
+                data["product_id"] = id
+                id_cart = self._create_model("shoppingcart", data, ["quantity", "discount_value", "is_closed"])
+                if id_cart:
+                    # then performe update
+                    data = self.shoppingcart_data
+                    data["quantity"] = 20
+                    data["discount_value"] = 9.99
+                    data["is_closed"] = True
+                    self._update_model("shoppingcart", id, data, ["quantity", "discount_value", "is_closed"])
+                self.assertIsNotNone(id_cart)
+            self.assertIsNotNone(id_prod)
+        self.assertIsNotNone(id)
+
+
+    def test_shoppingcart_delete(self):
+        """
+        This test case checks if shoppingcart delete endpoint is working as expected
+        """
+        # first we create a customer
+        id = self._create_model("customer", self.customer_data, ["name", "email", "phone"])
+        if id:
+            # then we create a product
+            id_prod = self._create_model("product", self.product_data, ["name", "description", "image_link", "price"])
+            if id_prod:
+                # then we can create the shoppingcart
+                data = self.shoppingcart_data
+                data["customer_id"] = id
+                data["product_id"] = id
+                id_cart = self._create_model("shoppingcart", data, ["quantity", "discount_value", "is_closed"])
+                if id_cart:
+                    # then performe delete
+                    self._delete_model("shoppingcart", id_cart)
+                self.assertIsNotNone(id_cart)
+            self.assertIsNotNone(id_prod)
+        self.assertIsNotNone(id)
+    # END shoppingcart CRUD
+
+
+    # Testing Update Soppingcart View
+    def test_update_shoppingcart_view(self):
+        """
+        Test for update cart view
+        """
+        # first we create a customer
+        id = self._create_model("customer", self.customer_data, ["name", "email", "phone"])
+        if id:
+            # then we create a product
+            id_prod = self._create_model("product", self.product_data, ["name", "description", "image_link", "price"])
+            if id_prod:
+                # then we can create the shoppingcart
+                data = self.shoppingcart_data
+                data["customer_id"] = id
+                data["product_id"] = id
+                id_cart = self._create_model("shoppingcart", data, ["quantity", "discount_value", "is_closed"])
+                if id_cart:
+                    # then performe the update
+                    self.url = reverse("update-shoppingcart")
+                    data = { **self.shoppingcart_data }
+                    data["is_closed"] = True
+                    data["id"] = id_cart
+                    response = self.client.post(self.url, data, **self.auth_headers)
+                    if response.status_code == status.HTTP_200_OK:
+                        r_json = response.json()
+                        self.assertTrue(r_json["cart"]["is_closed"])
+                self.assertIsNotNone(id_cart)
+            self.assertIsNotNone(id_prod)
+        self.assertIsNotNone(id)
+
+    
+    def test_shoppingcart_must_not_update_if_closed(self):
+        """
+        Test for update cart view if it is closed
+        """
+        # first we create a customer
+        id = self._create_model("customer", self.customer_data, ["name", "email", "phone"])
+        if id:
+            # then we create a product
+            id_prod = self._create_model("product", self.product_data, ["name", "description", "image_link", "price"])
+            if id_prod:
+                # then we can create the closed shoppingcart
+                data = self.shoppingcart_data
+                data["customer_id"] = id
+                data["product_id"] = id
+                data["is_closed"] = True
+                id_cart = self._create_model("shoppingcart", data, ["quantity", "discount_value", "is_closed"])
+                if id_cart:
+                    # then check for fail in update shoppingcart
+                    self.url = reverse("update-shoppingcart")
+                    data["id"] = id_cart
+                    response = self.client.post(self.url, data, **self.auth_headers)
+                    self.assertNotEqual(response.status_code, status.HTTP_200_OK)
+                self.assertIsNotNone(id_cart)
+            self.assertIsNotNone(id_prod)
+        self.assertIsNotNone(id)
+    # END Testing Update Soppingcart View
 
 
     # Testing Auth Token

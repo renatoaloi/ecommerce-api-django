@@ -1474,6 +1474,584 @@ paths:
       responses:
         '204':
           description: ''
+  /api/shoppingcarts/:
+    get:
+      security:
+        - ApiKeyAuth: []
+      tags: [ "Shopping Cart" ]
+      operationId: listShoppingCarts
+      description: CRUD endpoint for shopping cart management
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    id:
+                      type: integer
+                      readOnly: true
+                    customer:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 255
+                        email:
+                          type: string
+                          maxLength: 255
+                        phone:
+                          type: string
+                          maxLength: 255
+                        creation_date:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                      required:
+                      - name
+                      - email
+                      - phone
+                      type: object
+                      readOnly: true
+                    product:
+                      properties:
+                        id:
+                          type: integer
+                          readOnly: true
+                        name:
+                          type: string
+                          maxLength: 255
+                        description:
+                          type: string
+                        image_link:
+                          type: string
+                        price:
+                          type: number
+                        creation_date:
+                          type: string
+                          format: date-time
+                          readOnly: true
+                      required:
+                      - name
+                      - description
+                      - image_link
+                      - price
+                      type: object
+                      readOnly: true
+                    quantity:
+                      type: integer
+                    discount_value:
+                      type: number
+                    creation_date:
+                      type: string
+                      format: date-time
+                      readOnly: true
+                    closed_date:
+                      type: string
+                      format: date-time
+                      readOnly: true
+                    is_closed:
+                      type: boolean
+                  required:
+                  - quantity
+                  - discount_value
+                  - is_closed
+          description: ''
+    post:
+      security:
+        - ApiKeyAuth: []
+      tags: [ "Shopping Cart" ]
+      operationId: createShoppingCart
+      description: CRUD endpoint for shopping cart management
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &id013
+              properties:
+                customer_id:
+                  type: integer
+                  writeOnly: true
+                product_id:
+                  type: integer
+                  writeOnly: true
+                quantity:
+                  type: integer
+                discount_value:
+                  type: number
+                is_closed:
+                  type: boolean
+              required:
+              - customer_id
+              - product_id
+              - quantity
+              - discount_value
+              - is_closed
+          application/x-www-form-urlencoded:
+            schema: *id013
+          multipart/form-data:
+            schema: *id013
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  customer:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 255
+                      email:
+                        type: string
+                        maxLength: 255
+                      phone:
+                        type: string
+                        maxLength: 255
+                      creation_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - name
+                    - email
+                    - phone
+                    type: object
+                    readOnly: true
+                  product:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 255
+                      description:
+                        type: string
+                      image_link:
+                        type: string
+                      price:
+                        type: number
+                      creation_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - name
+                    - description
+                    - image_link
+                    - price
+                    type: object
+                    readOnly: true
+                  quantity:
+                    type: integer
+                  discount_value:
+                    type: number
+                  creation_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  closed_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  is_closed:
+                    type: boolean
+                required:
+                - quantity
+                - discount_value
+                - is_closed
+          description: ''
+  /api/shoppingcarts/{id}/:
+    get:
+      security:
+        - ApiKeyAuth: []
+      tags: [ "Shopping Cart" ]
+      operationId: retrieveShoppingCart
+      description: CRUD endpoint for shopping cart management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this shopping cart.
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  customer:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 255
+                      email:
+                        type: string
+                        maxLength: 255
+                      phone:
+                        type: string
+                        maxLength: 255
+                      creation_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - name
+                    - email
+                    - phone
+                    type: object
+                    readOnly: true
+                  product:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 255
+                      description:
+                        type: string
+                      image_link:
+                        type: string
+                      price:
+                        type: number
+                      creation_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - name
+                    - description
+                    - image_link
+                    - price
+                    type: object
+                    readOnly: true
+                  quantity:
+                    type: integer
+                  discount_value:
+                    type: number
+                  creation_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  closed_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  is_closed:
+                    type: boolean
+                required:
+                - quantity
+                - discount_value
+                - is_closed
+          description: ''
+    put:
+      security:
+        - ApiKeyAuth: []
+      tags: [ "Shopping Cart" ]
+      operationId: updateShoppingCart
+      description: CRUD endpoint for shopping cart management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this shopping cart.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id014
+              properties:
+                customer_id:
+                  type: integer
+                  writeOnly: true
+                product_id:
+                  type: integer
+                  writeOnly: true
+                quantity:
+                  type: integer
+                discount_value:
+                  type: number
+                is_closed:
+                  type: boolean
+              required:
+              - customer_id
+              - product_id
+              - quantity
+              - discount_value
+              - is_closed
+          application/x-www-form-urlencoded:
+            schema: *id014
+          multipart/form-data:
+            schema: *id014
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  customer:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 255
+                      email:
+                        type: string
+                        maxLength: 255
+                      phone:
+                        type: string
+                        maxLength: 255
+                      creation_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - name
+                    - email
+                    - phone
+                    type: object
+                    readOnly: true
+                  product:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 255
+                      description:
+                        type: string
+                      image_link:
+                        type: string
+                      price:
+                        type: number
+                      creation_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - name
+                    - description
+                    - image_link
+                    - price
+                    type: object
+                    readOnly: true
+                  quantity:
+                    type: integer
+                  discount_value:
+                    type: number
+                  creation_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  closed_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  is_closed:
+                    type: boolean
+                required:
+                - quantity
+                - discount_value
+                - is_closed
+          description: ''
+    patch:
+      security:
+        - ApiKeyAuth: []
+      tags: [ "Shopping Cart" ]
+      operationId: partial_updateShoppingCart
+      description: CRUD endpoint for shopping cart management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this shopping cart.
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema: &id015
+              properties:
+                customer_id:
+                  type: integer
+                  writeOnly: true
+                product_id:
+                  type: integer
+                  writeOnly: true
+                quantity:
+                  type: integer
+                discount_value:
+                  type: number
+                is_closed:
+                  type: boolean
+          application/x-www-form-urlencoded:
+            schema: *id015
+          multipart/form-data:
+            schema: *id015
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                properties:
+                  id:
+                    type: integer
+                    readOnly: true
+                  customer:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 255
+                      email:
+                        type: string
+                        maxLength: 255
+                      phone:
+                        type: string
+                        maxLength: 255
+                      creation_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - name
+                    - email
+                    - phone
+                    type: object
+                    readOnly: true
+                  product:
+                    properties:
+                      id:
+                        type: integer
+                        readOnly: true
+                      name:
+                        type: string
+                        maxLength: 255
+                      description:
+                        type: string
+                      image_link:
+                        type: string
+                      price:
+                        type: number
+                      creation_date:
+                        type: string
+                        format: date-time
+                        readOnly: true
+                    required:
+                    - name
+                    - description
+                    - image_link
+                    - price
+                    type: object
+                    readOnly: true
+                  quantity:
+                    type: integer
+                  discount_value:
+                    type: number
+                  creation_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  closed_date:
+                    type: string
+                    format: date-time
+                    readOnly: true
+                  is_closed:
+                    type: boolean
+                required:
+                - quantity
+                - discount_value
+                - is_closed
+          description: ''
+    delete:
+      security:
+        - ApiKeyAuth: []
+      tags: [ "Shopping Cart" ]
+      operationId: destroyShoppingCart
+      description: CRUD endpoint for shopping cart management
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: A unique integer value identifying this shopping cart.
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+  /api/update-shoppingcart:
+    post:
+      security:
+        - ApiKeyAuth: []
+      tags: [ "Business Rules" ]
+      operationId: CreateUpdateShoppingCart
+      description: Endpoint for update user's shopping cart
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: &my_id013
+              properties:
+                id:
+                  type: integer
+                customer_id:
+                  type: integer
+                  writeOnly: true
+                product_id:
+                  type: integer
+                  writeOnly: true
+                quantity:
+                  type: integer
+                discount_value:
+                  type: number
+                is_closed:
+                  type: boolean
+              required:
+              - id
+              - customer_id
+              - product_id
+              - quantity
+              - discount_value
+              - is_closed
+          application/x-www-form-urlencoded:
+            schema: *my_id013
+          multipart/form-data:
+            schema: *my_id013
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+
 components:
   securitySchemes:
     ApiKeyAuth:        # arbitrary name for the security scheme
